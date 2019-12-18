@@ -33,9 +33,11 @@ def results(request, question_id):
     # question_id에 해당하는 Question을 보여주고
     # 해당 Question에 연결된 Choice목록을 보여주며
     #  보여줄때, votes값도 같이 보여주도록 함
-
-    response = "You're looking at the results of question {}"
-    return HttpResponse(response.format(question_id))
+    question = get_object_or_404(Question, pk=question_id)
+    context = {
+        'question': question,
+    }
+    return render(request, 'polls/results.html', context)
 
 
 def vote(request, question_id):
@@ -43,6 +45,9 @@ def vote(request, question_id):
     # 특정 Choice의 votes를 1늘리기
     # 이후 특정 Question에 해당하는 results페이지로 이동
     if request.method == 'POST':
+        # 아무것도 선택되지 않은 경우,
+        #  detail페이지로 다시 이동 (redirect)
+
         # GET parameter로 전달된 question_id에 해당하는 Question객체
         question = get_object_or_404(Question, pk=question_id)
 
