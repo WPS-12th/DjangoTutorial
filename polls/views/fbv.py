@@ -1,8 +1,9 @@
-from django.http import HttpResponse, Http404
+"""
+Function-based view
+"""
 from django.shortcuts import render, get_object_or_404, redirect
-from django.template import loader
 
-from .models import Question, Choice
+from ..models import Question, Choice
 
 
 def index(request):
